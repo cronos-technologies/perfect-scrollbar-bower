@@ -685,34 +685,7 @@ var updateScroll = require('../update-scroll');
 function bindMouseWheelHandler(element, i) {
   var shouldPrevent = false;
   
-  //IE explorer fix
-  var ua = window.navigator.userAgent;
 
-  var msie = ua.indexOf('MSIE ');
-  if (msie > 0) {
-    // IE 10 or older => return version number
-    if (!h.env.isWebKit && element.querySelector('select:focus')) {
-      return;
-    }
-  }
-
-  var trident = ua.indexOf('Trident/');
-  if (trident > 0) {
-    // IE 11 => return version number
-    var rv = ua.indexOf('rv:');
-    if (!h.env.isWebKit && element.querySelector('select:focus')) {
-      return;
-    }
-  }
-
-  var edge = ua.indexOf('Edge/');
-  if (edge > 0) {
-    // Edge (IE 12+) => return version number
-    if (!h.env.isWebKit && element.querySelector('select:focus')) {
-      return;
-    }
-  }
-  //END FIX
   function shouldPreventDefault(deltaX, deltaY) {
     var scrollTop = element.scrollTop;
     if (deltaX === 0) {
@@ -792,9 +765,30 @@ function bindMouseWheelHandler(element, i) {
   function mousewheelHandler(e) {
     var delta = getDeltaFromEvent(e);
     
-    if (!isWebkit && $this.find('select:focus').length > 0) {
+    //IE fix
+    
+        var ua = window.navigator.userAgent;
+
+        var msie = ua.indexOf('MSIE ');
+        if (msie > 0) {
+          // IE 10 or older => return version number
           return;
         }
+
+        var trident = ua.indexOf('Trident/');
+        if (trident > 0) {
+          // IE 11 => return version number
+          var rv = ua.indexOf('rv:');
+          return;
+        }
+
+        var edge = ua.indexOf('Edge/');
+        if (edge > 0) {
+          // Edge (IE 12+) => return version number
+          return;
+        }
+    
+    //END FIX
     
     var deltaX = delta[0];
     var deltaY = delta[1];
