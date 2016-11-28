@@ -763,7 +763,11 @@ function bindMouseWheelHandler(element, i) {
 
   function mousewheelHandler(e) {
     var delta = getDeltaFromEvent(e);
-
+    
+    if (!isWebkit && $this.find('select:focus').length > 0) {
+          return;
+        }
+    
     var deltaX = delta[0];
     var deltaY = delta[1];
 
