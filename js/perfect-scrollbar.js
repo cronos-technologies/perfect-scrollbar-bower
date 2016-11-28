@@ -684,7 +684,7 @@ var updateScroll = require('../update-scroll');
 
 function bindMouseWheelHandler(element, i) {
   var shouldPrevent = false;
-  
+
 
   function shouldPreventDefault(deltaX, deltaY) {
     var scrollTop = element.scrollTop;
@@ -763,13 +763,13 @@ function bindMouseWheelHandler(element, i) {
   }
 
   function mousewheelHandler(e) {
-    var delta = getDeltaFromEvent(e);
-    
-    //IE fix
+    // This will be considered a zoom event.
     if (e.metaKey || e.ctrlKey) {
-           return;
-       }
-    
+      e.stopPropagation();
+      return;
+    }
+
+    // IE Select Fix
         var ua = window.navigator.userAgent;
 
         var msie = ua.indexOf('MSIE ');
@@ -790,9 +790,8 @@ function bindMouseWheelHandler(element, i) {
           // Edge (IE 12+) => return version number
           return;
         }
-    
-    //END FIX
-    
+
+    var delta = getDeltaFromEvent(e);
     var deltaX = delta[0];
     var deltaY = delta[1];
 

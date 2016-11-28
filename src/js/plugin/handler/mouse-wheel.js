@@ -84,6 +84,34 @@ function bindMouseWheelHandler(element, i) {
   }
 
   function mousewheelHandler(e) {
+    // This will be considered a zoom event.
+    if (e.metaKey || e.ctrlKey) {
+      e.stopPropagation();
+      return;
+    }
+
+    // IE Select Fix
+        var ua = window.navigator.userAgent;
+
+        var msie = ua.indexOf('MSIE ');
+        if (msie > 0) {
+          // IE 10 or older => return version number
+          return;
+        }
+
+        var trident = ua.indexOf('Trident/');
+        if (trident > 0) {
+          // IE 11 => return version number
+          var rv = ua.indexOf('rv:');
+          return;
+        }
+
+        var edge = ua.indexOf('Edge/');
+        if (edge > 0) {
+          // Edge (IE 12+) => return version number
+          return;
+        }
+
     var delta = getDeltaFromEvent(e);
 
     var deltaX = delta[0];
