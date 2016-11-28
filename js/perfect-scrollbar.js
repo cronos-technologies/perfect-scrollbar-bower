@@ -684,7 +684,11 @@ var updateScroll = require('../update-scroll');
 
 function bindMouseWheelHandler(element, i) {
   var shouldPrevent = false;
-
+  
+  if (!h.env.isWebKit && element.querySelector('select:focus')) {
+        return;
+       }
+  
   function shouldPreventDefault(deltaX, deltaY) {
     var scrollTop = element.scrollTop;
     if (deltaX === 0) {
