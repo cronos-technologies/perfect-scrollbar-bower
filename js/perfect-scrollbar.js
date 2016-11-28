@@ -766,6 +766,9 @@ function bindMouseWheelHandler(element, i) {
     var delta = getDeltaFromEvent(e);
     
     //IE fix
+    if (e.metaKey || e.ctrlKey) {
+           return;
+       }
     
         var ua = window.navigator.userAgent;
 
