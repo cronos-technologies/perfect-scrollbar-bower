@@ -346,7 +346,8 @@ module.exports = {
   useBothWheelAxes: false,
   wheelPropagation: false,
   wheelSpeed: 1,
-  theme: 'default'
+  theme: 'default',
+  exceptions: null
 };
 
 },{}],9:[function(require,module,exports){
@@ -1067,7 +1068,9 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
         clearInterval(easingLoop);
       }
 
-      e.stopPropagation();
+      if (!$(e.target).closest($(i.settings.exceptions)).length) {
+        e.stopPropagation();
+      }
     }
   }
   function touchMove(e) {

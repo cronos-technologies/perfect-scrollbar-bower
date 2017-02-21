@@ -84,7 +84,9 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
         clearInterval(easingLoop);
       }
 
-      e.stopPropagation();
+      if (!$(e.target).closest($(i.settings.exceptions)).length) {
+        e.stopPropagation();
+      }
     }
   }
   function touchMove(e) {
